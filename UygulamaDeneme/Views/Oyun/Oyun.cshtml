@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewBag.Title = "Game";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+    <h2>Oyun</h2>
+
+<script type="text/javascript">
+
+     $(document).ready(function () {
+        //alert($(this).find("#button.1.2").val());
+    });
+
+    function Flag() {
+
+
+        if ($('#flag').val() == 0) {
+            $('#flag').val(1);
+        }
+        else {
+            $('#flag').val(0);
+        }
+
+        
+    };
+
+
+    function FindNumber(x, y) {
+
+        var a = 0;
+        if ($('#button' + (x - 1) + (y - 1)).val() == 1) {
+            a = a + 1;
+        }
+        if ($('#button' + (x) + (y - 1)).val() == 1) {
+            a = a + 1;
+        }
+        if ($('#button' + (x + 1) + (y - 1)).val() == 1) {
+            a = a + 1;
+        }
+        if ($('#button' + (x - 1) + (y)).val() == 1) {
+            a = a + 1;
+        }
+        if ($('#button' + (x + 1) + (y)).val() == 1) {
+            a = a + 1;
+        }
+        if ($('#button' + (x - 1) + (y + 1)).val() == 1) {
+            a = a + 1;
+        }
+        if ($('#button' + (x) + (y + 1)).val() == 1) {
+            a = a + 1;
+        }
+        if ($('#button' + (x + 1) + (y + 1)).val() == 1) {
+            a = a + 1;
+        }
+        if (a == 0) {
+            $('#button' + (x) + (y)).css('background', 'dimgray', 'color', '#FFE4C4');
+            return ".";
+        }
+        else {
+            $('#button' + (x) + (y)).css('background', '#FFE4C4');
+            return a;
+        }
+            
+        
+    };
+
+
+    function Check(x,y) {
+        $.ajax
+            ({
+                url: "@Url.Action("JOyun", "Oyun")",
+                type: 'POST',
+                data:
+                {
+                    xeksen: x,
+                    yeksen: y
+                },
+                dataType: 'json',
+                success: function (data) {
+
+                    //alert("bir :" + $('#button' + (data[0] - 1) + (data[1]-1)).val());
+                    //alert("iki :" + $('#button' + (data[0]) + (data[1] - 1)).val());
+                    //alert("üç :" + $('#button' + (data[0] + 1) + (data[1] - 1)).val());
+                    //alert("dört :" + $('#button' + (data[0] - 1) + (data[1])).val());
+                    //alert("beş :" + $('#button' + (data[0] + 1) + (data[1])).val());
+                    //alert("altı :" + $('#button' + (data[0] - 1) + (data[1] + 1)).val());
+                    //alert("yedi :" + $('#button' + (data[0]) + (data[1] + 1)).val());
+                    //alert("sekiz:"+$('#button' + (data[0]+1) + (data[1]+1)).val());
+                    
+                    if ($('#flag').val() == 1) {
+                        var a = 0;
+                        if ($('#button' + data[0] + data[1]).val() == 1) {
+                            $('#button' + data[0] + data[1]).css('background', 'red');
+                            $('#button' + data[0] + data[1]).text(":(");
+                            alert("Kaybettin !");
+                            location.reload();
+                        }
+                        else {
+                            if (FindNumber(data[0], data[1]) == ".") {
+
+                                $('#button' + (data[0] + 1) + data[1]).text(FindNumber((data[0] + 1), data[1]));
+                                //$('#button' + (data[0] + 1) + data[1]).css('background', '#FFE4C4');
+                                $('#button' + (data[0] - 1) + data[1]).text(FindNumber((data[0] - 1), data[1]));
+                                //$('#button' + (data[0] - 1) + data[1]).css('background', '#FFE4C4');
+                                $('#button' + (data[0] - 1) + (data[1] - 1)).text(FindNumber((data[0] - 1), (data[1] - 1)));
+                                //$('#button' + (data[0] - 1) + (data[1] - 1)).css('background', '#FFE4C4');
+                                $('#button' + (data[0]) + (data[1] - 1)).text(FindNumber((data[0]), (data[1] - 1)));
+                                //$('#button' + (data[0]) + (data[1] - 1)).css('background', '#FFE4C4');
+                                $('#button' + (data[0] + 1) + (data[1] - 1)).text(FindNumber((data[0] + 1), (data[1] - 1)));
+                                //$('#button' + (data[0] + 1) + (data[1] - 1)).css('background', '#FFE4C4');
+                                $('#button' + (data[0] - 1) + (data[1] + 1)).text(FindNumber((data[0] - 1), (data[1] + 1)));
+                                //$('#button' + (data[0] - 1) + (data[1] + 1)).css('background', '#FFE4C4');
+                                $('#button' + (data[0]) + (data[1] + 1)).text(FindNumber((data[0]), (data[1] + 1)));
+                                //$('#button' + (data[0]) + (data[1] + 1)).css('background', '#FFE4C4');
+                                $('#button' + (data[0] + 1) + (data[1] + 1)).text(FindNumber((data[0] + 1), (data[1] + 1)));
+                                //$('#button' + (data[0] + 1) + (data[1] + 1)).css('background', '#FFE4C4');
+                            }
+                            else {
+                                $('#button' + data[0] + data[1]).text(FindNumber(data[0], data[1]));
+                                $('#button' + data[0] + data[1]).css('background', '#FFE4C4');
+                            }
+                        }
+                    }
+                    else
+                    {
+                        $('#button' + data[0] + data[1]).css('background', '#A9A9A9');
+                        $('#button' + data[0] + data[1]).text('X');
+                        var b = parseInt($('#topbomb').text());
+                        b = b - 1;
+                        $('#topbomb').text(b);
+                    }
+                }
+                
+            })
+    };
+</script>
+
+<style>
+    .Kutu {
+        width: 50px;
+        height: 50px;
+        font-weight: bold;
+        font:100;
+        background: #DEB887;
+    }
+    .Kutu1 {
+        width: 50px;
+        height: 50px;
+        background: #ff6a00;
+    }
+</style>
+
+<center>
+    <h1>Mayın Tarlası</h1>
+
+
+    @{int Topbomb = Convert.ToInt32(ViewBag.top);
+        Random rnd = new Random();
+        int bombasayi = 0;
+        for (int i = 0; i < Convert.ToInt32(ViewBag.y); i++)
+        {
+
+            for (int j = 0; j < Convert.ToInt32(ViewBag.x); j++)
+            {
+                if (rnd.Next(3) == 1 && bombasayi<Topbomb)
+                {
+                    @:<button class="Kutu" value=1 id="@("button"+j+i)" onclick="Check(@j,@i);">.</button>
+                        bombasayi = bombasayi + 1;
+                }
+                else
+                {
+                    @:<button class="Kutu" value=0 id="@("button"+j+i)" onclick="Check(@j,@i);">.</button>
+                }
+            }
+            @:<br>
+        }
+
+        @:<h3><c id="topbomb">@bombasayi</c> : Adet bomba kaldı <br><input type="checkbox" name="flag" id="flag" value="1" onclick="Flag();">Bayrak Ekle</h3>
+    }
+</center>

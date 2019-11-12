@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+    });
+
+    @*function OyunaGonder() {
+        $.ajax
+            ({
+                url: "@Url.Action("JOyun", "Anasayfa")",
+                type: 'POST',
+                data:
+                {
+                    xeksen: $(this).find('#xeksen').val(),
+                    yeksen: $(this).find('#xeksen').val(),
+                },
+                dataType: 'json',
+                success: function (data)
+                {
+                    alert(data);
+                }
+            })
+    };*@
+</script>
+<center>
+    <h1>Seçenekler</h1>
+    @using (Html.BeginForm("Oyun", "Oyun", FormMethod.Post, new { @class="form-group"}))
+    {
+        <span><h4>Kaç çarpı kaç olsun ?</h4></span><br />
+        @Html.TextBox("x", "5");
+        @Html.TextBox("y", "5");
+        <br />
+        <span><h4>Maksimum kaç Bomba Olsun ?</h4></span><br />
+        @Html.TextBox("top", "10");
+
+        <br />
+        <input type="submit" value="Gonder" />
+    }
+</center>
+
+
+

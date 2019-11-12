@@ -1,0 +1,25 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<style>
+    .body {
+        background-color:dimgray;
+    }
+</style>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <script type="text/javascript" src="~/Scripts/jquery-1.8.0.min.js"></script>
+    <title>_Layout</title>
+</head>
+
+<body class="body">
+    @Html.Partial("_Header")
+    @RenderBody()
+    @Html.Partial("_Footer")
+</body>
+</html>
