@@ -1,3 +1,3 @@
 # MinesweeperGame
  
-Build with .Net MVC
+Build with .Net MVC & Javascript
